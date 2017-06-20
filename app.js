@@ -1,9 +1,7 @@
 var howMany;
 var destinations = [];
 var home;
-var current;
-var path;
-var waypoint = []
+var waypoint = [];
 var directionsDisplay = new google.maps.DirectionsRenderer;
 var directionsService = new google.maps.DirectionsService;
 
