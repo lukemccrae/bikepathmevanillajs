@@ -1,9 +1,11 @@
 #map {
     height: 40em;
-    width: 60em;
+    width: 30em;
+    background-color: black;
 }
 
 #directionsPanel {
     height: 40em;
-    width: 60em;
+    width: 20em;
+    background-color: gray;
 }

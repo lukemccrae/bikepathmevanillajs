@@ -4,12 +4,19 @@
   "description": "testing",
   "main": "app.js",
   "scripts": {
-    "test": "mocha || true"
+    "test": "mocha || true",
+    "build": "browserify app.js -o bundle.js",
+    "watch": "watchify app.js -o bundle.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "browserify": "^14.4.0",
     "chai": "^4.0.2",
-    "mocha": "^3.4.2"
+    "mocha": "^3.4.2",
+    "watchify": "^3.9.0"
+  },
+  "dependencies": {
+    "jquery": "^3.2.1"
   }
 }

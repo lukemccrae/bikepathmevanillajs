@@ -1,16 +1,22 @@
-var howMany;
-var destinations = [];
-var home;
-var waypoint = [];
 var directionsDisplay = new google.maps.DirectionsRenderer;
 var directionsService = new google.maps.DirectionsService;
+var destinations = [];
+var howMany;
+var home;
+var waypoint = [];
 
-function buttonClick() {
+// var button = require('./assets/button.js')
+
+var button = $('<button/>').html('click me').on('click', function() {
     howMany = parseInt(document.getElementById("number").value)
-    findCurrent()
-}
+    findCurrent();
+})
+
+$('body').append(button)
+
 
 function findCurrent() {
+    console.log('hi');
     navigator.geolocation.getCurrentPosition(function(position) {
         $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + position.coords.latitude + ',' + position.coords.longitude + '&key=AIzaSyB6mjYhp5ca_RPpOdHu_Ul7E-YY6BYzmms')
             .done(function(data) {})
@@ -77,15 +83,6 @@ function searchAgain(currentLatLng) {
     }
 }
 
-function alreadyAdded(loc) {
-    for (var i = 0; i < destinations.length; i++) {
-        if (destinations[i].name === loc) {
-            return false;
-        }
-    }
-    return true;
-}
-
 function finishedSearching(end) {
     path = `https://maps.googleapis.com/maps/api/directions/json?mode=bicycling&origin=${home.lat},${home.lng}&destination=${home.lat},${home.lng}&waypoint=${waypoint}&key=AIzaSyB6mjYhp5ca_RPpOdHu_Ul7E-YY6BYzmms`
     // $.get(path).done(function(data) {
@@ -96,6 +93,7 @@ function finishedSearching(end) {
 
 function initialize() {
     directionsDisplay = new google.maps.DirectionsRenderer();
+    console.log(directionsDisplay);
     var chicago = new google.maps.LatLng(home.lat, home.lng);
     var mapOptions = {
         zoom: 15,
@@ -103,7 +101,16 @@ function initialize() {
     }
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
     directionsDisplay.setMap(map);
+    directionsDisplay.setPanel(document.getElementById('directionsPanel'));
     calculateAndDisplayRoute(directionsService, directionsDisplay)
+}
+var alreadyAdded = function(loc) {
+    for (var i = 0; i < destinations.length; i++) {
+        if (destinations[i].name === loc) {
+            return false;
+        }
+    }
+    return true;
 }
 
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
@@ -123,6 +130,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
         }
     });
 }
+
 
 function calcRoute() {
     var request = {

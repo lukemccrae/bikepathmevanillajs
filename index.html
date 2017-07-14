@@ -13,14 +13,15 @@
     <div class="container">
         <h1>Hello There, welcome to your new bike path generator!</h1>
         <p>Select how many destinations you want to bike to today...</p>
-        <input id="number" value="4">
-        <button id="search" class="button" type="button" name="button" onclick="buttonClick();">GO</button>
-        <div id="map" </div>
-            <div id="directionsPanel" </div>
-            </div>
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6mjYhp5ca_RPpOdHu_Ul7E-YY6BYzmms&libraries=places"></script>
-            <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-            <script src="app.js"></script>
+        <div class="row">
+            <input id="number" value="5">
+            <div id="map" class="col-6"> </div>
+            <div id="directionsPanel" class="col-6"> </div>
+        </div>
+    </div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6mjYhp5ca_RPpOdHu_Ul7E-YY6BYzmms&libraries=places"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="app.js"></script>
 
 </body>
 
