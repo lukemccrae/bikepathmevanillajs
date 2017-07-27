@@ -1,22 +1,27 @@
 var directionsDisplay = new google.maps.DirectionsRenderer;
 var directionsService = new google.maps.DirectionsService;
 var destinations = [];
+var waypoint = [];
 var howMany;
 var home;
-var waypoint = [];
 
-// var button = require('./assets/button.js')
-
-var button = $('<button/>').html('click me').on('click', function() {
+function startClick() {
+    destinations = []
+    waypoint = []
+    loading();
     howMany = parseInt(document.getElementById("number").value)
     findCurrent();
-})
+}
 
-$('body').append(button)
-
+function loading() {
+    document.getElementById("directionsPanel").innerHTML = "";
+    document.getElementById('loader').style.display = 'block'
+    document.getElementById("load-text").style.display = 'block';
+    document.getElementById("directionsPanel").style.display = 'none';
+    document.getElementById("map").style.display = 'none';
+}
 
 function findCurrent() {
-    console.log('hi');
     navigator.geolocation.getCurrentPosition(function(position) {
         $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + position.coords.latitude + ',' + position.coords.longitude + '&key=AIzaSyB6mjYhp5ca_RPpOdHu_Ul7E-YY6BYzmms')
             .done(function(data) {})
@@ -61,11 +66,6 @@ function addLocation(results, status) {
                 location: currentLatLng.lat + ',' + currentLatLng.lng
             })
             console.log(currentLoc.name);
-            //variable method of adding waypoints
-            // waypoint.push(currentLatLng)
-
-            //google maps object waypoints
-            // waypoints.push(new google.maps.LatLng(currentLatLng.lat, currentLatLng.lng))
             howMany += -1
             searchAgain(currentLatLng)
         } else {
@@ -83,17 +83,22 @@ function searchAgain(currentLatLng) {
     }
 }
 
+function doneLoading() {
+    document.getElementById('loader').style.display = 'none'
+    document.getElementById('load-text').style.display = 'none'
+    document.getElementById('directionsPanel').style.display = 'block'
+    document.getElementById('map').style.display = 'block'
+    document.getElementById('startButton').textContent = 'Search Again'
+}
+
 function finishedSearching(end) {
     path = `https://maps.googleapis.com/maps/api/directions/json?mode=bicycling&origin=${home.lat},${home.lng}&destination=${home.lat},${home.lng}&waypoint=${waypoint}&key=AIzaSyB6mjYhp5ca_RPpOdHu_Ul7E-YY6BYzmms`
-    // $.get(path).done(function(data) {
-    //     console.log(data);
-    // })
+    doneLoading()
     initialize()
 }
 
 function initialize() {
     directionsDisplay = new google.maps.DirectionsRenderer();
-    console.log(directionsDisplay);
     var chicago = new google.maps.LatLng(home.lat, home.lng);
     var mapOptions = {
         zoom: 15,
@@ -104,6 +109,7 @@ function initialize() {
     directionsDisplay.setPanel(document.getElementById('directionsPanel'));
     calculateAndDisplayRoute(directionsService, directionsDisplay)
 }
+
 var alreadyAdded = function(loc) {
     for (var i = 0; i < destinations.length; i++) {
         if (destinations[i].name === loc) {
