@@ -22,9 +22,13 @@ function loading() {
 }
 
 function findCurrent() {
+    //this code should be running but is not
+    console.log('findCurrent()');
     navigator.geolocation.getCurrentPosition(function(position) {
         $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + position.coords.latitude + ',' + position.coords.longitude + '&key=AIzaSyB6mjYhp5ca_RPpOdHu_Ul7E-YY6BYzmms')
-            .done(function(data) {})
+            .done(function(data) {
+                console.log('hi');
+            })
             .fail(function(error) {
                 console.log(error);
             })
