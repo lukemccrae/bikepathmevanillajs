@@ -95,8 +95,20 @@ function doneLoading() {
     document.getElementById('startButton').textContent = 'Search Again'
 }
 
+
+
 function finishedSearching(end) {
-    path = `https://maps.googleapis.com/maps/api/directions/json?mode=bicycling&origin=${home.lat},${home.lng}&destination=${home.lat},${home.lng}&waypoint=${waypoint}&key=AIzaSyB6mjYhp5ca_RPpOdHu_Ul7E-YY6BYzmms`
+    var path = `https://www.google.com/maps/dir/?api=1?mode=bicycling&origin=${home.lat},${home.lng}&destination=${home.lat},${home.lng}&waypoints=`
+    waypointString();
+
+    function waypointString() {
+        var result = ''
+        for (var i = 0; i < waypoint.length; i++) {
+            var point = waypoint[i].location + '&7C'
+            path += point
+        }
+        console.log(path);
+    }
     doneLoading()
     initialize()
 }
@@ -124,15 +136,15 @@ var alreadyAdded = function(loc) {
 }
 
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-    var start = home
-    var end = home
     directionsService.route({
-        origin: start,
-        destination: end,
+        origin: home,
+        destination: home,
         travelMode: 'BICYCLING',
         waypoints: waypoint,
         optimizeWaypoints: true
     }, function(response, status) {
+        console.log(response);
+        console.log(waypoint);
         if (status === 'OK') {
             directionsDisplay.setDirections(response);
         } else {

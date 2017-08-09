@@ -14,6 +14,8 @@
     display: none;
 }
 
+#header {}
+
 footer {
     position: absolute;
     left: 0;
@@ -41,4 +43,9 @@ footer {
     100% {
         transform: rotate(360deg);
     }
+}
+
+
+}
+
 }
